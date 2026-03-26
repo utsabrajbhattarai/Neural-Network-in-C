@@ -5,7 +5,7 @@
 #include "nn.h"
 
 /* ---- hyperparameters: tweak these on Day 3 ---- */
-#define EPOCHS      5000
+#define EPOCHS      1000
 #define LR          0.01
 #define TEST_RATIO  0.20
 
