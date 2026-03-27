@@ -6,7 +6,7 @@
 #include "nn.h"
 
 /* ---- hyperparameters: tweak these on Day 3 ---- */
-#define EPOCHS      2000
+#define EPOCHS      3000
 #define LR          0.001
 #define TEST_RATIO  0.20
 
@@ -42,6 +42,24 @@ static void print_confusion(NeuralNet *net, Dataset *ds)
     printf("  Precision: %.2f  |  Recall: %.2f\n", precision, recall);
 }
 
+static void print_f1(NeuralNet *net, Dataset *ds)
+{
+    int tp = 0, fp = 0, fn = 0;
+    for (int i = 0; i < ds->n_samples; i++) {
+        int pred  = (nn_forward(net, ds->X[i]) >= 0.5) ? 1 : 0;
+        int truth = (int)ds->y[i];
+        if      (pred == 1 && truth == 1) tp++;
+        else if (pred == 1 && truth == 0) fp++;
+        else if (pred == 0 && truth == 1) fn++;
+    }
+    double precision = (tp + fp) ? (double)tp / (tp + fp) : 0.0;
+    double recall    = (tp + fn) ? (double)tp / (tp + fn) : 0.0;
+    double f1        = (precision + recall > 0)
+                       ? 2.0 * precision * recall / (precision + recall)
+                       : 0.0;
+    printf("  F1 Score:  %.4f\n", f1);
+}
+
 int main(void)
 {
     srand((unsigned)time(NULL));   /* seed once here for reproducibility */
@@ -74,6 +92,7 @@ int main(void)
            nn_loss(&net, &test),  nn_accuracy(&net, &test)  * 100.0);
 
     print_confusion(&net, &test);
+    print_f1(&net, &test);
 
     /* ------ 6. Inspect learned weights (feature importance proxy) --- */
     /* Row-wise L2 norm = overall importance of each feature across all hidden neurons */
