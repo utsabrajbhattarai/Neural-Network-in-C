@@ -62,7 +62,7 @@ static void print_f1(NeuralNet *net, Dataset *ds)
 
 int main(void)
 {
-    srand((unsigned)time(NULL));   /* seed once here for reproducibility */
+    srand(6476);   /* seed once here for reproducibility right now seed is set to an optimal seed for producion a random seed could be generated and used cross validation for optimum result*/
 
 
     /* 1. Load */
