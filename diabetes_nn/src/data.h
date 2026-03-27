@@ -15,7 +15,8 @@ typedef struct {
 int  load_csv(const char *path, Dataset *ds);
 
 /* Min-max normalise each feature column to [0, 1]. Must call before split. */
-void normalize_minmax(Dataset *ds);
+void normalize_minmax(Dataset *ds,
+                      double mins[N_FEATURES], double maxs[N_FEATURES]);
 
 /* Fisher-Yates in-place shuffle. Call before split for unbiased test set. */
 void shuffle_dataset(Dataset *ds);

@@ -145,26 +145,32 @@ double nn_loss(NeuralNet *net, Dataset *ds)
     return total / ds->n_samples;
 }
 
-void nn_save(NeuralNet *net, const char *path)
+void nn_save(NeuralNet *net, const char *path,
+             double mins[N_FEATURES], double maxs[N_FEATURES])
 {
     FILE *f = fopen(path, "wb");
     if (!f) { perror("nn_save"); return; }
-    fwrite(net->W1, sizeof(net->W1), 1, f);
-    fwrite(net->b1, sizeof(net->b1), 1, f);
-    fwrite(net->W2, sizeof(net->W2), 1, f);
-    fwrite(&net->b2, sizeof(net->b2), 1, f);
+    fwrite(net->W1,  sizeof(net->W1),  1, f);
+    fwrite(net->b1,  sizeof(net->b1),  1, f);
+    fwrite(net->W2,  sizeof(net->W2),  1, f);
+    fwrite(&net->b2, sizeof(net->b2),  1, f);
+    fwrite(mins,     sizeof(double) * N_FEATURES, 1, f);  // save min/max too
+    fwrite(maxs,     sizeof(double) * N_FEATURES, 1, f);
     fclose(f);
     printf("[nn] Weights saved to %s\n", path);
 }
 
-void nn_load(NeuralNet *net, const char *path)
+void nn_load(NeuralNet *net, const char *path,
+             double mins[N_FEATURES], double maxs[N_FEATURES])
 {
     FILE *f = fopen(path, "rb");
     if (!f) { perror("nn_load"); return; }
-    fread(net->W1, sizeof(net->W1), 1, f);
-    fread(net->b1, sizeof(net->b1), 1, f);
-    fread(net->W2, sizeof(net->W2), 1, f);
-    fread(&net->b2, sizeof(net->b2), 1, f);
+    fread(net->W1,  sizeof(net->W1),  1, f);
+    fread(net->b1,  sizeof(net->b1),  1, f);
+    fread(net->W2,  sizeof(net->W2),  1, f);
+    fread(&net->b2, sizeof(net->b2),  1, f);
+    fread(mins,     sizeof(double) * N_FEATURES, 1, f);   // load min/max too
+    fread(maxs,     sizeof(double) * N_FEATURES, 1, f);
     fclose(f);
     printf("[nn] Weights loaded from %s\n", path);
 }

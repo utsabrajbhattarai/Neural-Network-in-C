@@ -40,7 +40,8 @@ int load_csv(const char *path, Dataset *ds)
     return 0;
 }
 
-void normalize_minmax(Dataset *ds)
+void normalize_minmax(Dataset *ds,
+                      double mins[N_FEATURES], double maxs[N_FEATURES])
 {
     for (int j = 0; j < N_FEATURES; j++) {
         double mn = ds->X[0][j], mx = ds->X[0][j];
@@ -48,6 +49,8 @@ void normalize_minmax(Dataset *ds)
             if (ds->X[i][j] < mn) mn = ds->X[i][j];
             if (ds->X[i][j] > mx) mx = ds->X[i][j];
         }
+        mins[j] = mn;   // save it
+        maxs[j] = mx;   // save it
         double range = (mx - mn < 1e-9) ? 1.0 : mx - mn;
         for (int i = 0; i < ds->n_samples; i++)
             ds->X[i][j] = (ds->X[i][j] - mn) / range;

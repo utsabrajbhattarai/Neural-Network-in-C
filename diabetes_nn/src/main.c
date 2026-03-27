@@ -74,8 +74,9 @@ int main(void)
 
 
     /* 2. Pre-process */
-    normalize_minmax(&full);       /* [0,1] per feature */
-    shuffle_dataset(&full);        /* randomise before split */
+    double mins[N_FEATURES], maxs[N_FEATURES];
+    normalize_minmax(&full, mins, maxs);        /* [0,1] per feature */
+    shuffle_dataset(&full);                      /* randomise before split */
 
 
     /* 3. Split */
@@ -113,8 +114,9 @@ int main(void)
 
 
     /* 7. Save the trained model weights to a file */
-    nn_save(&net, "model_weights.bin"); // model_weights.bin is a binary file that will contain the trained weights of the neural network. This allows you to save the state of the model after training, and later load it back for inference or further training without having to retrain from scratch.
-                                        // model_weights.bin is the most dynamic outcome and model_weights_best.bin is the outcome that had 84% accuracy.
+    nn_save(&net, "model_weights_best.bin", mins, maxs);
+                                                     // model_weights.bin is a binary file that will contain the trained weights of the neural network. This allows you to save the state of the model after training, and later load it back for inference or further training without having to retrain from scratch.
+                                                     // model_weights.bin is the most dynamic outcome and model_weights_best.bin is the outcome that had 84% accuracy.
 
     return 0;
 }

@@ -44,7 +44,9 @@ void   nn_backward(NeuralNet *net, double x[N_FEATURES],
 void   nn_train   (NeuralNet *net, Dataset *ds, int epochs);
 double nn_accuracy(NeuralNet *net, Dataset *ds);
 double nn_loss    (NeuralNet *net, Dataset *ds);
-void nn_save(NeuralNet *net, const char *path);
-void nn_load(NeuralNet *net, const char *path);
+void nn_save(NeuralNet *net, const char *path,
+             double mins[N_FEATURES], double maxs[N_FEATURES]);
+void nn_load(NeuralNet *net, const char *path,
+             double mins[N_FEATURES], double maxs[N_FEATURES]);
 
 #endif /* NN_H */
