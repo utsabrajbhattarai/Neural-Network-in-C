@@ -13,12 +13,12 @@ static double sigmoid(double z)
 
 static double relu(double z)
 {
-    return z > 0.0 ? z : 0.0;
+    return z > 0.0 ? z : 0.01 * z;  // leaky — never fully dies
 }
 
 static double relu_deriv(double z)
 {
-    return z > 0.0 ? 1.0 : 0.0;
+    return z > 0.0 ? 1.0 : 0.01;    // always small gradient, never zero
 }
 
 /* ------------------------------------------------------------------ public API */
