@@ -60,7 +60,7 @@ static void print_f1(NeuralNet *net, Dataset *ds)
     printf("  F1 Score:  %.4f\n", f1);
 }
 
-int main(void)
+int main()
 {
     srand(6476);   /* seed once here for reproducibility right now seed is set to an optimal seed for producion a random seed could be generated and used cross validation for optimum result*/
 

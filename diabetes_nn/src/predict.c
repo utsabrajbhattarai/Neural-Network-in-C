@@ -15,7 +15,7 @@ static const char *FEATURE_NAMES[N_FEATURES] = {
     "Age               (e.g. 25)"
 };
 
-int main(void)
+int main()
 {
     NeuralNet net;
     double mins[N_FEATURES], maxs[N_FEATURES];
