@@ -62,7 +62,7 @@ static void print_f1(NeuralNet *net, Dataset *ds)
 
 int main()
 {
-    srand(6476);   /* seed once here for reproducibility right now seed is set to an optimal seed for producion a random seed could be generated and used cross validation for optimum result*/
+    srand(676967);   /* 47890 seed once here for reproducibility right now seed is set to an optimal seed for producion a random seed could be generated and used cross validation for optimum result*/
 
 
     /* 1. Load */
@@ -114,7 +114,7 @@ int main()
 
 
     /* 7. Save the trained model weights to a file */
-    nn_save(&net, "model_weights_best.bin", mins, maxs);
+    nn_save(&net, "model_weights.bin", mins, maxs);
                                                      // model_weights.bin is a binary file that will contain the trained weights of the neural network. This allows you to save the state of the model after training, and later load it back for inference or further training without having to retrain from scratch.
                                                      // model_weights.bin is the most dynamic outcome and model_weights_best.bin is the outcome that had 84% accuracy.
 
